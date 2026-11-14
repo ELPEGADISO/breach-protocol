@@ -1,0 +1,37 @@
+BREACH PROTOCOL - paquete PWA / APK
+===================================
+
+Contenido: index.html (el juego), manifest.webmanifest, sw.js (modo sin conexion), icons/.
+Si cambias el juego, sube un numero a V en sw.js (por ejemplo bp-v2) para que los moviles se actualicen.
+
+OPCION A: PWA (la mas simple, sin Android Studio)
+1. Sube esta carpeta a un hosting estatico con HTTPS.
+   - Netlify Drop: entra en app.netlify.com/drop y arrastra la carpeta.
+   - GitHub Pages: sube los archivos a un repositorio y activa Pages.
+2. En Android abre la direccion en Chrome.
+3. Menu de tres puntos > "Instalar app" (o "Anadir a la pantalla de inicio").
+4. Abrela una vez con internet: asi se guardan el juego y las fuentes. Despues funciona sin conexion.
+
+OPCION B: APK con PWABuilder (necesita la PWA del paso A en linea)
+1. Entra en pwabuilder.com y pega la direccion de tu PWA.
+2. Pulsa "Package for stores" > Android > genera el paquete.
+3. Dentro del zip viene un .apk que puedes instalar (activa "instalar apps desconocidas").
+4. Guarda el archivo de firma (keystore) que incluye: lo necesitas para futuras actualizaciones.
+
+OPCION C: APK con Capacitor (sin hosting, todo en tu ordenador)
+Requisitos: Node.js y Android Studio.
+  mkdir breach-apk && cd breach-apk
+  npm init -y
+  npm i @capacitor/core @capacitor/cli @capacitor/android
+  mkdir www            (copia dentro index.html, manifest.webmanifest, sw.js e icons/)
+  npx cap init "Breach Protocol" com.tunombre.breach --web-dir=www
+  npx cap add android
+  npx cap sync
+  npx cap open android
+En Android Studio: Build > Build Bundle(s) / APK(s) > Build APK(s).
+El .apk queda en android/app/build/outputs/apk/debug/.
+
+NOTA SOBRE LAS FUENTES
+El juego carga Chakra Petch y Share Tech Mono desde Google Fonts. Con la PWA se guardan
+tras la primera visita con internet. Si quieres garantizarlas sin conexion desde el primer
+uso, descarga ambas fuentes (.woff2), ponlas en una carpeta fonts/ y avisame: las enlazo en el codigo.
